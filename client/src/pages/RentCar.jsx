@@ -1,9 +1,7 @@
 import React from 'react'
 
-function RentCar() {
+export const RentCar = () => {
   return (
     <div>RentCar</div>
   )
 }
-
-export default RentCar
