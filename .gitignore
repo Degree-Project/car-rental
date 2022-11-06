@@ -12,9 +12,9 @@ dist
 dist-ssr
 *.local
 .env
-.createdb.txt
 
 # Editor directories and files
+createdb.txt
 .vscode/*
 !.vscode/extensions.json
 .idea
