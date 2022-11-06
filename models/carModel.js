@@ -20,4 +20,12 @@ module.exports = {
       }
     );
   },
+  get: (callBack) => {
+    db.query(`SELECT * FROM car_details;`, [], (error, result) => {
+      if (error) {
+        return callBack(error);
+      }
+      return callBack(null, result);
+    });
+  },
 };

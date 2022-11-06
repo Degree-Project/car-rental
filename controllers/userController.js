@@ -1,4 +1,4 @@
-const { create, byEmail } = require("../models/userModel");
+const { create, getUsers, getUserByEmail } = require("../models/userModel");
 // const { genSaltSync, hashSync } = require("bcrypt");
 module.exports = {
   createUser: (req, res) => {
@@ -22,23 +22,36 @@ module.exports = {
       });
     });
   },
-  //   byEmail: (req, res) => {
-  //     const email = req.params.email;
-  //     getUserByEmail(email, (err, results) => {
-  //       if (err) {
-  //         console.log(err);
-  //         return;
-  //       }
-  //       if (!results) {
-  //         return res.json({
-  //           success: 0,
-  //           message: "Record not found",
-  //         });
-  //       }
-  //       return res.json({
-  //         success: 1,
-  //         data: results,
-  //       });
-  //     });
-  //   },
+  getUsers: (req, res) => {
+    getUsers((err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  getUserByEmail: (req, res) => {
+    const email = req.body.email;
+    getUserByEmail(email, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      console.log("Email : " + email);
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
 };
