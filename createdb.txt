@@ -3,3 +3,6 @@
 
 ---------- custmer_details ----------
 CREATE TABLE `car_rental`.`custmer_details` (`customerId` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(64) NOT NULL , `email` VARCHAR(32) NOT NULL , `password` VARCHAR(16) NOT NULL , `phoneNo` INT(16) NOT NULL , PRIMARY KEY (`customerId`), UNIQUE (`email`(32)), UNIQUE (`phoneNo`(10))) ENGINE = InnoDB;
+
+---------- booking_details ----------
+CREATE TABLE `car_rental`.`booking_details` (`bookingId` INT NOT NULL AUTO_INCREMENT , `pickUpDate` DATE NOT NULL , `dropOffDate` DATE NOT NULL , `noOfDays` INT(4) NOT NULL , `carId` INT(16) NOT NULL , `customerId` INT(16) NOT NULL , `driverId` INT(16) NOT NULL , PRIMARY KEY (`bookingId`)) ENGINE = InnoDB;

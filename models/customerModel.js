@@ -5,7 +5,7 @@ module.exports = {
   add: (data, callBack) => {
     // console.log("Phone No : " + data.phoneNo);
     db.query(
-      `INSERT INTO custmer_details (name, email, password, phoneNo) VALUES (?,?,?,?)`,
+      `INSERT INTO customer_details (name, email, password, phoneNo) VALUES (?,?,?,?)`,
       [data.name, data.email, data.password, data.phoneNo],
       (error, result) => {
         if (error) {
@@ -17,7 +17,7 @@ module.exports = {
   },
   getUserByEmail: (email, callBack) => {
     db.query(
-      `SELECT name, email, password FROM custmer_details WHERE email = ?;`,
+      `SELECT * FROM customer_details WHERE email = ?;`,
       [email],
       (error, results) => {
         if (error) {
@@ -29,7 +29,7 @@ module.exports = {
   },
   updateDetails: (data, callBack) => {
     db.query(
-      `UPDATE custmer_details SET name=?, password=?, phoneNo=? WHERE email=?; `,
+      `UPDATE customer_details SET name=?, password=?, phoneNo=? WHERE email=?; `,
       [data.name, data.password, data.phoneNo, data.email],
       (error, results) => {
         if (error) {
