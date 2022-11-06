@@ -6,7 +6,7 @@ const {
 var router = require("express").Router();
 const { checkToken } = require("../auth/validateToken");
 
-router.post("/sign-up", checkToken, signup);
+router.post("/sign-up", signup);
 router.post("/login", login);
 router.post("/update-details", checkToken, updateDetails);
 

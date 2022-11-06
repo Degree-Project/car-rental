@@ -28,4 +28,16 @@ module.exports = {
       return callBack(null, result);
     });
   },
+  getCarById: (id, callBack) => {
+    db.query(
+      `SELECT * FROM car_details WHERE carId=?;`,
+      [id],
+      (error, result) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, result);
+      }
+    );
+  },
 };
