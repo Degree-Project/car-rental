@@ -1,0 +1,5 @@
+---------- car_details ----------
+
+
+---------- custmer_details ----------
+CREATE TABLE `car_rental`.`custmer_details` (`customerId` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(64) NOT NULL , `email` VARCHAR(32) NOT NULL , `password` VARCHAR(16) NOT NULL , `phoneNo` INT(16) NOT NULL , PRIMARY KEY (`customerId`), UNIQUE (`email`(32)), UNIQUE (`phoneNo`(10))) ENGINE = InnoDB;

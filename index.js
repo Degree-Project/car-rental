@@ -1,7 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const db = require("./db/config.js");
-const loginRouter = require("./routes/loginRouter.js");
+const customerRouter = require("./routes/customerRouter");
+const carRouter = require("./routes/carRouter");
 
 dotenv.config();
 const app = express();
@@ -22,7 +23,8 @@ const app = express();
 
 // app.use();
 app.use(express.json());
-app.use("/user", loginRouter);
+app.use("/customer", customerRouter);
+app.use("/api", carRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
