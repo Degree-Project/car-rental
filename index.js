@@ -24,9 +24,9 @@ const app = express();
 
 // app.use();
 app.use(express.json());
-app.use("/customer", customerRouter);
-app.use("/car", carRouter);
-app.use("/book", bookingRouter);
+app.use("/api/customer", customerRouter);
+app.use("/api/car", carRouter);
+app.use("/api/book", bookingRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
