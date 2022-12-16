@@ -3,10 +3,10 @@ const db = require("../db/config");
 
 module.exports = {
   add: (data, callBack) => {
-    // console.log("Phone No : " + data.phoneNo);
+    
     db.query(
-      `INSERT INTO customer_details (name, email, password, phoneNo) VALUES (?,?,?,?)`,
-      [data.name, data.email, data.password, data.phoneNo],
+      `INSERT INTO customer_details (name, email, password, phoneNo, role) VALUES (?,?,?,?,?)`,
+      [data.name, data.email, data.password, data.phoneNo, data.role],
       (error, result) => {
         if (error) {
           return callBack(error);

@@ -1,15 +1,21 @@
-import { Navbar, Footer } from './components';
-import { Home, Login, Signup, AllCars, RentCar } from './pages'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Header, Footer, ProtectedRoute } from './components';
+import { Home, Login, Signup, AllCars, RentCar, NewCar } from './pages'
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return <div>
-    <Navbar/>
+    <Header/>
     <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Signup />} />
+        <Route path="/cars" element={<AllCars/>} />
+        <Route path="/cars/new" element={<NewCar/>} />
     </Routes>
-    <Footer />
-  </div>;
+    <ToastContainer theme="colored" />
+  </div>
 }
 
 export default App;
