@@ -3,7 +3,7 @@ const db = require("../db/config");
 module.exports = {
   add: (data, callBack) => {
     db.query(
-      `INSERT INTO car_details(companyName, carName, carType, noOfSeats, pricePerDay, securityDeposite ) values(?,?,?,?,?,?);`,
+      `INSERT INTO car_details(companyName, carName, carType, noOfSeats, pricePerDay, securityDeposite, availability ) values(?,?,?,?,?,?,?);`,
       [
         data.companyName,
         data.carName,
@@ -11,6 +11,7 @@ module.exports = {
         data.noOfSeats,
         data.pricePerDay,
         data.securityDeposite,
+        data.availability
       ],
       (error, result) => {
         if (error) {

@@ -1,5 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
+const bodyParser = require('body-parser');
+const fileUpload = require("express-fileupload");
 const db = require("./db/config.js");
 const customerRouter = require("./routes/customerRouter");
 const carRouter = require("./routes/carRouter");
@@ -8,22 +11,24 @@ const bookingRouter = require("./routes/bookingRouter");
 dotenv.config();
 const app = express();
 
-// app.get("/", (req, res) => {
-//   const sqlQuery =
-//     // "INSERT INTO login(email, password) VALUES ('saiel','1q2w3e4r');";
-//     "SELECT * FROM login;";
-//   db.query(sqlQuery, (err, result) => {
-//     if (err) console.log("Error" + err);
-//   });
-// });
-// app.get("/", (req, res) => {
-// res.send("Working...");
-// res.json({ message: "welcome" });
-// });
-// require("./routes/loginRouter");
+app.get("/", (req, res) => {
+res.send("Working...");
+});
 
-// app.use();
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+app.use( bodyParser.json());
+app.use(cors());
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:5173"],
+    credentials: true,
+  })
+);
+app.use(fileUpload());
 app.use(express.json());
+
 app.use("/api/customer", customerRouter);
 app.use("/api/car", carRouter);
 app.use("/api/book", bookingRouter);

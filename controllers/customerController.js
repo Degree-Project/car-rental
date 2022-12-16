@@ -50,10 +50,15 @@ module.exports = {
         const jsonToken = sign({ result: results }, "dbmsproject", {
           expiresIn: "1h",
         });
+        res.cookie("token", jsonToken, {
+          httpOnly: true,
+        });
+
         return res.json({
           success: 1,
           message: "Login successfully",
           token: jsonToken,
+          user: results
         });
       } else {
         return res.json({
