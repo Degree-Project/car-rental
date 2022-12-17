@@ -1,6 +1,7 @@
 const db = require("../db/config");
 
 module.exports = {
+  // To make a booking
   addBooking: (data, callBack) => {
     db.query(
       `INSERT INTO booking_details (pickUpDate, pickUpTime, dropOffDate, dropOffTime, noOfDays, carId, customerId, driverId) VALUES (?,?,?,?,?,?,?,?);`,
@@ -22,6 +23,7 @@ module.exports = {
       }
     );
   },
+  // To add driver details
   addDriver: (data, callBack) => {
     db.query(
       `INSERT INTO driver_details (name, email, phoneNo, driverLicenceNo, dateOfBirth, address, additionalNote) VALUES (?,?,?,?,?,?,?)`,
@@ -34,6 +36,19 @@ module.exports = {
         data.address,
         data.additionalNote,
       ],
+      (error, result) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, result);
+      }
+    );
+  },
+  // To delete booking
+  deleteBooking: (bookingId, callBack) => {
+    db.query(
+      `DELETE FROM booking_details WHERE bookingId=?`,
+      [bookingId],
       (error, result) => {
         if (error) {
           return callBack(error);
