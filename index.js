@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const db = require("./db/config.js");
 const customerRouter = require("./routes/customerRouter");
@@ -12,13 +12,16 @@ dotenv.config();
 const app = express();
 
 app.get("/", (req, res) => {
-res.send("Working...");
+  res.send("Working...");
 });
 
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-})); 
-app.use( bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
 app.use(cors());
 app.use(
   cors({

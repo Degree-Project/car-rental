@@ -2,9 +2,9 @@ const { verify } = require("jsonwebtoken");
 
 module.exports = {
   checkToken: (req, res, next) => {
-    let token = req.get("authorization");
+    let token = req.get("cookie");
     if (token) {
-      token = token.slice(7);
+      token = token.slice(6);
       verify(token, "dbmsproject", (err, decoded) => {
         if (err) {
           res.json({
