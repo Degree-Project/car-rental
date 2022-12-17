@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { BASE_URL } from '../utils/utils';
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../utils/utils";
 import "../styles/login.css";
 
 export const Login = () => {
@@ -9,33 +10,43 @@ export const Login = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
-    setUser(prevUser => ({
+    setUser((prevUser) => ({
       ...prevUser,
       email: e.target.value,
     }));
   };
 
   const handlePasswordChange = (e) => {
-    setUser(prevUser => ({
+    setUser((prevUser) => ({
       ...prevUser,
       password: e.target.value,
     }));
   };
 
   const handleLogin = () => {
-    try {
-      axios.post(`${BASE_URL}/customer/login`, {...user}).then((res) => {
-        console.log(res)
+    const test = axios
+      .post(`${BASE_URL}/customer/login`, { ...user })
+      .then((res) => {
+        console.log(res);
+        navigate("/cars");
       });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+      
+      test.catch(err => toast.error(err.response.data.data));
+
+    toast.promise(test, {
+      pending: "Verifying...",
+      success: "Verified",
+    });
+  };
 
   return (
-    <div className="d-flex justify-content-center align-items-center border" style={{height: "85vh"}}>
+    <div
+      className="d-flex justify-content-center align-items-center border"
+      style={{ height: "85vh" }}
+    >
       <form>
         <div
           className="d-flex flex-column mx-auto px-5 py-3 rounded border shadow"
@@ -51,7 +62,7 @@ export const Login = () => {
             autoFocus
             onChange={handleEmailChange}
             value={user.email}
-                      className="mb-3 p-2 rounded border"
+            className="mb-3 p-2 rounded border"
           />
           <input
             type="password"
@@ -63,10 +74,15 @@ export const Login = () => {
             value={user.password}
             className="mb-3 p-2 rounded border"
           />
-          <button onClick={(e) => {
+          <button
+            onClick={(e) => {
               e.preventDefault();
               handleLogin();
-            }} className="rounded mb-3">Login</button>
+            }}
+            className="rounded mb-3"
+          >
+            Login
+          </button>
           <p>
             Don't have a account? <Link to="/register">Register</Link>
           </p>

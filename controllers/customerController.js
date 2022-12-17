@@ -32,13 +32,14 @@ module.exports = {
     });
   },
   login: (req, res) => {
+    
     const body = req.body;
     getUserByEmail(body.email, (err, results) => {
       if (err) {
         console.log(err);
       }
       if (!results) {
-        return res.json({
+        return res.status(403).json({
           success: 0,
           data: "Invalid email or password.",
         });

@@ -10,9 +10,9 @@ export const AllCars = () => {
   const getCars = () => {
     axios.get(`${BASE_URL}/car/getCars`).then((res) => {
       setCars(res.data.data);
-      console.log(cars);
     })
   }
+
 
   useEffect(() => {
     getCars();

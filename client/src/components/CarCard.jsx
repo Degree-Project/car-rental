@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const CarCard = ({
+  carId,
   companyName,
   carName,
   carType,
@@ -8,6 +10,11 @@ export const CarCard = ({
   securityDeposite,
   pricePerDay,
 }) => {
+  const navigate = useNavigate();
+  const handleBookClick  = () => {
+    navigate(`/booking/${carId}`)
+  }
+
   return (
     <div
       className="car-card d-flex justify-content-between p-3 mb-3 rounded bg-light shadow border mx-auto"
@@ -48,7 +55,7 @@ export const CarCard = ({
               <img
                 src="https://img.icons8.com/windows/24/01c500/security-document.png"
                 className="item-icon me-1"
-              />
+  />
               <span className="item-text align-middle text-secondary">
                 &#8377;{securityDeposite}
               </span>
@@ -63,6 +70,7 @@ export const CarCard = ({
         <button
           className="btn w-100 px-2 text-light fw-bold shadow"
           style={{ backgroundColor: "#01c500" }}
+          onClick={handleBookClick}
         >
           Book
         </button>

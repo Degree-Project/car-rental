@@ -1,6 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Header, Footer, ProtectedRoute } from './components';
+import { Header, ProtectedRoute } from './components';
 import { Home, Login, Signup, AllCars, RentCar, NewCar } from './pages'
 import { Route, Routes } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ function App() {
         <Route path="/register" element={<Signup />} />
         <Route path="/cars" element={<AllCars/>} />
         <Route path="/cars/new" element={<NewCar/>} />
+        <Route path="/booking/:id" element={<RentCar/>} />
     </Routes>
     <ToastContainer theme="colored" />
   </div>
