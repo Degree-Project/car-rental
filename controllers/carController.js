@@ -1,4 +1,10 @@
-const { add, get, getCarById } = require("../models/carModel");
+const {
+  add,
+  get,
+  getCarById,
+  deleteBookingWithCarId,
+  deleteCar,
+} = require("../models/carModel");
 
 module.exports = {
   addCar: (req, res) => {
@@ -56,6 +62,42 @@ module.exports = {
       }
       return res.status(200).json({
         success: 1,
+        data: results,
+      });
+    });
+  },
+  deleteBookingWithCarId: (req, res, next) => {
+    const carId = req.params.id;
+    deleteBookingWithCarId(carId, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          message: "Database connection error.",
+        });
+      } else {
+        next();
+      }
+    });
+  },
+  deleteCar: (req, res) => {
+    const carId = req.params.id;
+    deleteCar(carId, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          message: "Database connection error.",
+        });
+      }
+      if (!results.affectedRows) {
+        return res.status(500).json({
+          success: 0,
+          message: "No car found",
+        });
+      }
+      return res.status(200).json({
+        success: 2,
         data: results,
       });
     });
