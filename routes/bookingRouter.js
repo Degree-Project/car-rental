@@ -6,7 +6,7 @@ const {
 const { checkToken } = require("../auth/validateToken");
 var router = require("express").Router();
 
-router.post("/", checkToken, addBooking);
+router.post("/", addBooking);
 router.post("/driver", addDriver);
 router.post("/:id", checkToken, deleteBooking);
 

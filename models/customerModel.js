@@ -27,8 +27,8 @@ module.exports = {
   },
   updateDetails: (data, callBack) => {
     db.query(
-      `UPDATE customer_details SET name=?, password=?, phoneNo=? WHERE email=?; `,
-      [data.name, data.password, data.phoneNo, data.email],
+      `UPDATE customer_details SET name=?, phoneNo=? WHERE email=?; `,
+      [data.name, data.phoneNo, data.email],
       (error, results) => {
         if (error) {
           return callBack(error);
