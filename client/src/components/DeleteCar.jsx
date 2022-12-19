@@ -1,7 +1,11 @@
-import React from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import AuthContext from "../context/AuthContext";
+import { BASE_URL } from "../utils/utils";
 
-export const CarCard = ({
+export const DeleteCar = ({
   carId,
   companyName,
   carName,
@@ -10,18 +14,26 @@ export const CarCard = ({
   securityDeposite,
   pricePerDay,
 }) => {
+  const { token, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleBookClick  = () => {
-    navigate(`/booking/${carId}`)
-    navigate({
-      pathname: `/booking/${carId}`,
-      search: `?${createSearchParams({
-        cmname: companyName,
-        crname: carName
-    })}`
-    })
-  }
+  const handleDeleteClick = () => {
+    try {
+      setLoading((prevState) => !prevState);
+      axios
+        .get(`${BASE_URL}/car/delete/${carId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setLoading((prevState) => !prevState);
+          toast.success(`Successfully Deleted ${carName}`);
+          navigate("/admin/cars");
+        });
+    } catch (err) {
+      console.log(err.response.data.errorMessage);
+      toast.warning(err.response.data.errorMessage);
+    }
+  };
 
   return (
     <div
@@ -63,7 +75,7 @@ export const CarCard = ({
               <img
                 src="https://img.icons8.com/windows/24/01c500/security-document.png"
                 className="item-icon me-1"
-  />
+              />
               <span className="item-text align-middle text-secondary">
                 &#8377;{securityDeposite}
               </span>
@@ -77,10 +89,10 @@ export const CarCard = ({
         </p>
         <button
           className="btn w-100 px-2 text-light fw-bold shadow"
-          style={{ backgroundColor: "#01c500" }}
-          onClick={handleBookClick}
+          style={{ backgroundColor: "#f00" }}
+          onClick={handleDeleteClick}
         >
-          Book
+          Delete
         </button>
       </div>
     </div>

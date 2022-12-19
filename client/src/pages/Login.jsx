@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import AuthContext from "../context/AuthContext";
 import { BASE_URL } from "../utils/utils";
 import "../styles/login.css";
 
@@ -11,6 +12,11 @@ export const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
+  const {isAuthenticated, setAuth, token, handleSetToken, userDetails, setDetails, loading} = useContext(AuthContext);
+
+  useEffect(() => {
+      isAuthenticated ? (userDetails.role == "customer" ? navigate("/cars") : navigate("/profile")): null;
+  },[loading])
 
   const handleEmailChange = (e) => {
     setUser((prevUser) => ({
@@ -27,16 +33,16 @@ export const Login = () => {
   };
 
   const handleLogin = () => {
-    const test = axios
+    const promiseLoading = axios
       .post(`${BASE_URL}/customer/login`, { ...user })
       .then((res) => {
-        console.log(res);
-        navigate("/cars");
+        setAuth(true);
+        setDetails(res.data.user);
+        handleSetToken(res.data.token);
       });
       
-      test.catch(err => toast.error(err.response.data.data));
-
-    toast.promise(test, {
+    promiseLoading.catch(err => toast.error(err.response.data.data));
+    toast.promise(promiseLoading, {
       pending: "Verifying...",
       success: "Verified",
     });
@@ -79,7 +85,8 @@ export const Login = () => {
               e.preventDefault();
               handleLogin();
             }}
-            className="rounded mb-3"
+            className="rounded mb-3 fw-bold text-light"
+            style={{ backgroundColor: "#01c500" }}
           >
             Login
           </button>

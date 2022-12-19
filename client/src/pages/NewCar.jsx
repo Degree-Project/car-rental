@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../utils/utils";
+import AuthContext from "../context/AuthContext";
 
 export const NewCar = () => {
   const [car, setCar] = useState({
@@ -14,6 +15,7 @@ export const NewCar = () => {
     securityDeposite: null,
     availability: 1,
   });
+  const {token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleCompanyNameChange = (e) => {
@@ -69,9 +71,11 @@ export const NewCar = () => {
     //const formData = new FormData();
 
     try {
-      axios.post(`${BASE_URL}/car/addCar`, {...car}).then((res) => {
+      axios.post(`${BASE_URL}/car/addCar`, {...car},{
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((res) => {
         toast.success("Successfully Added");
-        navigate("/cars");
+        navigate("/admin/cars");
       });
     } catch (err) {
       console.log(err.response.data.errorMessage);
@@ -172,11 +176,12 @@ export const NewCar = () => {
             </div>
           </div>
           <button
-            className="rounded mb-3"
+            className="rounded mb-3 fw-bold text-light"
             onClick={(e) => {
               e.preventDefault();
               addCar();
             }}
+            style={{ backgroundColor: "#01c500" }}
           >
             Add Car
           </button>

@@ -88,8 +88,8 @@ module.exports = {
   },
   // To get user details
   getProfile: (req, res) => {
-    const token = req.get("cookie").slice(6);
-    console.log(token);
+    const token = req.get("authorization").slice(7);
+    // console.log(token);
     if (token === "") {
       return res.json({
         success: false,

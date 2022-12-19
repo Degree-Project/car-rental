@@ -1,20 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { BASE_URL } from '../utils/utils';
+import { BASE_URL } from "../utils/utils";
+import AuthContext from "../context/AuthContext";
 
-export const Signup = () => {
+export const Profile = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     phoneNo: "",
     password: "",
-    confirmPassword: "",
     role: "customer",
-    avatar: null
+    avatar: null,
   });
+  const { userDetails, setDetails, token } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const getUser = () => {
+    axios
+      .post(
+        `${BASE_URL}/customer/profile`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        setUser(res.data.data);
+        setDetails(res.data.data);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const handleNameChange = (e) => {
     setUser({
@@ -44,20 +64,6 @@ export const Signup = () => {
     });
   };
 
-  const handleCfPasswordChange = (e) => {
-    setUser({
-      ...user,
-      confirmPassword: e.target.value,
-    });
-  };
-
-  const handleRoleChange = (e) => {
-    setUser(prevUser => ({
-      ...prevUser,
-      role: e.target.value,
-    }));
-  };
-
   const handleAvatarChange = (e) => {
     setUser({
       ...user,
@@ -65,25 +71,34 @@ export const Signup = () => {
     });
   };
 
-  const registerUser = () => {
-    const formData = new FormData();
+  const updateProfile = () => {
+    // const formData = new FormData();
     // formData.append("avatar", user.avatar);
-    formData.append("name", user.name);
-    formData.append("email", user.email);
-    formData.append("phoneNo", user.phoneNo);
-    formData.append("password", user.password);
-    formData.append("role", user.role);
+    // formData.append("name", user.name);
+    // formData.append("email", user.email);
+    // formData.append("phoneNo", user.phoneNo);
+    // formData.append("password", user.password);
+    // formData.append("role", user.role);
 
     try {
-      axios.post(`${BASE_URL}/customer/sign-up`,formData).then((res) => {
-        toast.success("Successfully registered");
-        navigate("/cars");
-      });
+      axios
+        .post(
+          `${BASE_URL}/customer/update-details`,
+          { ...user },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          toast.success("Successfully Updated");
+          navigate("/profile");
+        });
     } catch (err) {
       console.log(err.response.data.errorMessage);
       toast.warning(err.response.data.errorMessage);
     }
-  }
+  };
 
   return (
     <div>
@@ -92,7 +107,7 @@ export const Signup = () => {
           className="d-flex flex-column mx-auto px-5 py-3 rounded border shadow"
           style={{ maxWidth: "28rem", marginTop: "2rem" }}
         >
-          <h2 className="text-center mb-3 fw-bold text-dark">Register</h2>
+          <h2 className="text-center mb-3 fw-bold text-dark">Profile</h2>
           <input
             type="text"
             name="name"
@@ -107,7 +122,7 @@ export const Signup = () => {
           <input
             type="email"
             name="email"
-            id="email"
+            readOnly
             placeholder="Email address"
             required
             autoFocus
@@ -126,44 +141,16 @@ export const Signup = () => {
             value={user.phoneNo}
             className="form-input form-control mb-3 p-2 rounded border"
           />
-          <div className="password-group container mb-3">
-            <div className="row d-flex justify-content-between">
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                required
-                onChange={handlePasswordChange}
-                value={user.password}
-                className="form-input p-2 rounded border col-5"
-              />
-              <input
-                type="password"
-                name="confirm-password"
-                id="confirm-password"
-                placeholder="Confirm Password"
-                required
-                onChange={handleCfPasswordChange}
-                value={user.confirmPassword}
-                className="form-input p-2 rounded border col-5"
-              />
-            </div>
-          </div>
           <button
             className="rounded mb-3 text-light fw-bold"
             onClick={(e) => {
               e.preventDefault();
-              registerUser();
+              updateProfile();
             }}
             style={{ backgroundColor: "#01c500" }}
           >
-            REGISTER
+            UPDATE PROFILE
           </button>
-
-          <p className="text-center">
-            Copyright <span>&copy;</span> 2022
-          </p>
         </div>
       </form>
     </div>
