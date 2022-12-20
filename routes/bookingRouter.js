@@ -2,6 +2,7 @@ const {
   addBooking,
   addDriver,
   deleteBooking,
+  updateCarAvailability,
 } = require("../controllers/bookingController");
 const { checkToken } = require("../auth/validateToken");
 var router = require("express").Router();

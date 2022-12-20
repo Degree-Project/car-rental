@@ -34,7 +34,6 @@ module.exports = {
   },
   // To login user
   login: (req, res) => {
-    
     const body = req.body;
     getUserByEmail(body.email, (err, results) => {
       if (err) {
@@ -88,7 +87,7 @@ module.exports = {
   },
   // To get user details
   getProfile: (req, res) => {
-    const token = req.get("authorization").slice(7);
+    const token = req.get("cookie").slice(6);
     // console.log(token);
     if (token === "") {
       return res.json({

@@ -1,0 +1,26 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #booking-details,
+  #booking-details * {
+    visibility: visible;
+    color: #01c500;
+  }
+  #booking-details {
+    position: absolute !important;
+    left: 0;
+    margin-top: -350px;
+  }
+}
+.gt {
+  text-align: end;
+  margin-top: 0.5rem;
+}
+.note-ul {
+  margin-left: 1rem;
+}
+.note {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

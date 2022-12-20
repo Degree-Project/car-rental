@@ -4,8 +4,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../utils/utils";
 import AuthContext from "../context/AuthContext";
-
+import { Receipt } from "../components/ReceiptModal";
 export const RentCar = () => {
+  const [modalShow, setModalShow] = useState(false);
   const [booking, setBooking] = useState({
     pickUpDate: "",
     pickUpTime: "",
@@ -13,12 +14,13 @@ export const RentCar = () => {
     dropOffTime: "",
     carId: "",
     customerId: "",
-    driverId: "5",
+    driverId: "2",
+    bookingId: "",
   });
-  const {userDetails} = useContext(AuthContext);
+  const { userDetails } = useContext(AuthContext);
   const { id } = useParams();
-  const [search]  = useSearchParams();
-  const navigate = useNavigate();
+  const [search] = useSearchParams();
+  // const navigate = useNavigate();
 
   const handlePickDateChange = (e) => {
     setBooking({
@@ -50,25 +52,24 @@ export const RentCar = () => {
 
   const handleBooking = () => {
     try {
-      axios.post(`${BASE_URL}/book`, { ...booking, carId: id, customerId: userDetails.customerId }).then((res) => {
-        toast.success("Successfully added...");
-        setBooking({
-          pickUpDate: "",
-          pickUpTime: "",
-          dropOffDate: "",
-          dropOffTime: "",
-          carId: "",
-          customerId: "",
-          driverId: "",
+      axios
+        .post(`${BASE_URL}/book`, {
+          ...booking,
+          carId: id,
+          customerId: userDetails.customerId,
+        })
+        .then((res) => {
+          toast.success("Successfully added...");
+          setBooking({
+            ...booking,
+            bookingId: res.data.data.insertId,
+          });
         });
-        navigate("/cars");
-      });
     } catch (err) {
       console.log(err.response.data.errorMessage);
       toast.warning(err.response.data.errorMessage);
     }
   };
-
   return (
     <div>
       <form>
@@ -84,7 +85,7 @@ export const RentCar = () => {
               name="name"
               placeholder="Full Name"
               readOnly
-              value={`${search.get('cmname')} ${search.get('crname')}`}
+              value={`${search.get("cmname")} ${search.get("crname")}`}
               className="form-input form-control mb-3 p-2 rounded border"
             />
           </label>
@@ -95,7 +96,7 @@ export const RentCar = () => {
                 <input
                   type="date"
                   name="date"
-                  min={new Date().toISOString().split('T')[0]}
+                  min={new Date().toISOString().split("T")[0]}
                   required
                   autoFocus
                   onChange={handlePickDateChange}
@@ -126,7 +127,7 @@ export const RentCar = () => {
                   name="date"
                   required
                   autoFocus
-                  min={new Date().toISOString().split('T')[0]}
+                  min={new Date().toISOString().split("T")[0]}
                   onChange={handleDropDateChange}
                   value={booking.dropOffDate}
                   className="form-input p-2 rounded border col-12"
@@ -151,13 +152,20 @@ export const RentCar = () => {
             onClick={(e) => {
               e.preventDefault();
               handleBooking();
+              setModalShow(true);
             }}
             style={{ backgroundColor: "#01c500" }}
           >
-            Book
+            Book Now
           </button>
         </div>
       </form>
+      <Receipt
+        userDetails={userDetails}
+        booking={booking}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </div>
   );
 };

@@ -3,6 +3,9 @@ const db = require("../db/config");
 module.exports = {
   // To make a booking
   addBooking: (data, callBack) => {
+    db.query(`UPDATE car_details SET availability=0 WHERE carId = ?;`, [
+      data.carId,
+    ]);
     db.query(
       `INSERT INTO booking_details (pickUpDate, pickUpTime, dropOffDate, dropOffTime, noOfDays, carId, customerId, driverId) VALUES (?,?,?,?,?,?,?,?);`,
       [

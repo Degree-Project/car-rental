@@ -43,38 +43,55 @@ export const Header = () => {
   return (
     <Navbar bg="light" variant="light" className="shadow bg-light">
       <Container>
-        <Navbar.Brand onClick={() => navigate("/")}>CarScope</Navbar.Brand>
+        <Navbar.Brand className="brand-font ml-4" onClick={() => navigate("/")}>
+          CarScope
+        </Navbar.Brand>
         <Nav className="me-auto">
           {userDetails.role == "customer" ? (
-            <Nav.Link onClick={() => navigate("/cars")}>All Cars</Nav.Link>
+            <Nav.Link className="mx-3" onClick={() => navigate("/cars")}>
+              All Cars
+            </Nav.Link>
           ) : null}
           {isAuthenticated ? (
-            <Nav.Link onClick={() => navigate("/profile")}>Profile</Nav.Link>
+            <Nav.Link className="mx-3" onClick={() => navigate("/profile")}>
+              Profile
+            </Nav.Link>
           ) : null}
           {isAuthenticated ? (
             userDetails.role == "customer" ? null : (
-              <Nav.Link onClick={() => navigate("/cars/new")}>Add Car</Nav.Link>
+              <Nav.Link className="mx-3" onClick={() => navigate("/cars/new")}>
+                Add Car
+              </Nav.Link>
             )
           ) : null}
           {userDetails.role == "customer" ? null : isAuthenticated ? (
-            <Nav.Link onClick={() => navigate("/driver/new")}>
+            <Nav.Link className="mx-3" onClick={() => navigate("/driver/new")}>
               Add Driver
             </Nav.Link>
           ) : null}
           {isAuthenticated ? (
             userDetails.role == "customer" ? null : (
-              <Nav.Link onClick={() => navigate("/admin/cars")}>
+              <Nav.Link
+                className="mx-3"
+                onClick={() => navigate("/admin/cars")}
+              >
                 My Cars
               </Nav.Link>
             )
           ) : null}
           {isAuthenticated ? (
-            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            <Nav.Link className="mx-3" onClick={handleLogout}>
+              Logout
+            </Nav.Link>
           ) : (
-            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link className="mx-3" href="/login">
+              Login
+            </Nav.Link>
           )}
           {isAuthenticated ? null : (
-            <Nav.Link href="/register">Signup</Nav.Link>
+            <Nav.Link className="mx-3" href="/register">
+              Signup
+            </Nav.Link>
           )}
         </Nav>
       </Container>

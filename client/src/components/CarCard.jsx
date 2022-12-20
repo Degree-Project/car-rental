@@ -12,16 +12,18 @@ export const CarCard = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleBookClick  = () => {
-    navigate(`/booking/${carId}`)
+  const handleBookClick = () => {
+    navigate(`/booking/${carId}`);
     navigate({
       pathname: `/booking/${carId}`,
       search: `?${createSearchParams({
         cmname: companyName,
-        crname: carName
-    })}`
-    })
-  }
+        crname: carName,
+        ppd: pricePerDay,
+        sd: securityDeposite,
+      })}`,
+    });
+  };
 
   return (
     <div
@@ -63,7 +65,7 @@ export const CarCard = ({
               <img
                 src="https://img.icons8.com/windows/24/01c500/security-document.png"
                 className="item-icon me-1"
-  />
+              />
               <span className="item-text align-middle text-secondary">
                 &#8377;{securityDeposite}
               </span>

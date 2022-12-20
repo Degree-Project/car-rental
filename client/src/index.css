@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Unbounded", cursive;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -14,9 +14,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --primary-color: rgb(255,193,57);
-  --secondary-color: rgb(17,17,17);
-  --accent-color: rgb(243,243,243);
+  --primary-color: rgb(255, 193, 57);
+  --secondary-color: rgb(17, 17, 17);
+  --accent-color: rgb(243, 243, 243);
 }
 
 * {
@@ -35,6 +35,7 @@ a:hover {
 }
 
 body {
+  font-family: "Chivo Mono", monospace;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -69,4 +70,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+.brand-font {
+  cursor: pointer;
 }

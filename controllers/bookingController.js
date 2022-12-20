@@ -2,6 +2,7 @@ const {
   addBooking,
   addDriver,
   deleteBooking,
+  updateCarAvailability,
 } = require("../models/bookingModel");
 
 module.exports = {
